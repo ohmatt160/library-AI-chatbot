@@ -57,6 +57,10 @@ def create_app(config_class='config.DevelopmentConfig'):
          allow_headers=["Content-Type", "Authorization"],
          methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 
+    # Setup logger
+    from .utils.logger import setup_logger
+    setup_logger(app)
+
     # Error handlers
     @app.errorhandler(404)
     def not_found(error):
