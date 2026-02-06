@@ -1,9 +1,9 @@
 # ====================== DATABASE MODELS ======================
-import datetime
+from datetime import datetime
 import uuid
 from flask_login import UserMixin
 from flask_restful import reqparse
-from config import  db,ma,bcrypt
+from .extensions import db, ma, bcrypt
 
 
 class User(db.Model, UserMixin):

@@ -1037,5 +1037,56 @@
         "borrowing_policy"
       ]
     }
+  },
+  {
+    "timestamp": 1770379803.9638896,
+    "datetime": "2026-02-06 12:10:03",
+    "user_id": "anon_3ffa576b-0719-4ea1-a02f-61a965ef69ad",
+    "session_id": "3ffa576b-0719-4ea1-a02f-61a965ef69ad",
+    "user_message": "Hello",
+    "bot_response": "\ud83d\udcda **Hello! I'm the Babcock University Library Assistant.**\n\nI can help you with:\n\u2022 \ud83d\udcda Finding books and resources\n\u2022 \ud83d\udcda Library hours and policies\n\u2022 \ud83d\udcda Research and database access\n\u2022 \ud83d\udcda Citation and reference help\n\u2022 \ud83d\udcda\u00ac General library information\n\n**How can I assist you today?** Try asking me something like:\n\"What are the library hours?\"\n\"How do I borrow a book?\"\n\"Find books about computer science\"",
+    "intent": "greeting",
+    "confidence": 0.9,
+    "processing_method": "nlp_based",
+    "context": {
+      "history": [],
+      "state": "ConversationState.GREETING",
+      "entities": {},
+      "user_preferences": {}
+    }
+  },
+  {
+    "timestamp": 1770379879.237585,
+    "datetime": "2026-02-06 12:11:19",
+    "user_id": "test_user",
+    "session_id": "test_session",
+    "user_message": "Hello",
+    "bot_response": "\ud83d\udcda **Hello! I'm the Babcock University Library Assistant.**\n\nI can help you with:\n\u2022 \ud83d\udcda Finding books and resources\n\u2022 \ud83d\udcda Library hours and policies\n\u2022 \ud83d\udcda Research and database access\n\u2022 \ud83d\udcda Citation and reference help\n\u2022 \ud83d\udcda\u00ac General library information\n\n**How can I assist you today?** Try asking me something like:\n\"What are the library hours?\"\n\"How do I borrow a book?\"\n\"Find books about computer science\"",
+    "intent": "greeting",
+    "confidence": 0.9,
+    "processing_method": "nlp_based",
+    "context": {
+      "history": [],
+      "state": "ConversationState.GREETING",
+      "entities": {},
+      "user_preferences": {}
+    }
+  },
+  {
+    "timestamp": 1770380772.4011173,
+    "datetime": "2026-02-06 12:26:12",
+    "user_id": "anon_8f89fc92-0979-4b15-bba6-ddd331bef87d",
+    "session_id": "8f89fc92-0979-4b15-bba6-ddd331bef87d",
+    "user_message": "Hello",
+    "bot_response": "\ud83d\udcda **Hello! I'm the Babcock University Library Assistant.**\n\nI can help you with:\n\u2022 \ud83d\udcda Finding books and resources\n\u2022 \ud83d\udcda Library hours and policies\n\u2022 \ud83d\udcda Research and database access\n\u2022 \ud83d\udcda Citation and reference help\n\u2022 \ud83d\udcda\u00ac General library information\n\n**How can I assist you today?** Try asking me something like:\n\"What are the library hours?\"\n\"How do I borrow a book?\"\n\"Find books about computer science\"",
+    "intent": "greeting",
+    "confidence": 0.9,
+    "processing_method": "nlp_based",
+    "context": {
+      "history": [],
+      "state": "ConversationState.GREETING",
+      "entities": {},
+      "user_preferences": {}
+    }
   }
 ]

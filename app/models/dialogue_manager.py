@@ -3,7 +3,6 @@ import json
 from enum import Enum
 from typing import Dict, List, Optional
 import redis  # For session management
-from typer.cli import state
 
 
 class ConversationState(Enum):
@@ -19,7 +18,17 @@ class DialogueManager:
         self.rule_engine = rule_engine
         self.nlp_engine = nlp_engine
         self.response_generator = response_generator
-        self.redis_client = redis.Redis(host='localhost', port=6379, db=0)
+        try:
+            self.redis_client = redis.Redis(host='localhost', port=6379, db=0)
+            self.redis_client.ping()
+        except Exception:
+            print("⚠️ Redis not available, using in-memory context storage")
+            class MockRedis:
+                def __init__(self): self.data = {}
+                def get(self, key): return self.data.get(key)
+                def setex(self, key, time, value): self.data[key] = value
+                def set(self, key, value): self.data[key] = value
+            self.redis_client = MockRedis()
         self.conversation_contexts = {}
 
     def process_message(self, user_id: str, session_id: str, message: str) -> Dict:
@@ -95,62 +104,42 @@ class DialogueManager:
         else:
             # Fallback to clarification or knowledge base
             processing_method = "clarification"
-            response_data = self._handle_low_confidence(message, context)
+            response_data = self._handle_low_confidence(message, confidence, context)
 
-        # Step 4: Update conversation context
+        # Step 4: Determine state
+        current_state = self._determine_state(user_id, session_id, intent, confidence, context)
+
+        # Step 5: Update conversation context
         self._update_context(context_key, {
             'last_intent': nlp_result['intent'],
             'last_entities': nlp_result['entities'],
             'conversation_history': context.get('history', []) + [message],
-            'state': self._determine_state(user_id, session_id, intent, confidence, context)
+            'state': current_state
         })
 
-        # Step 5: Generate final response
+        # Step 6: Generate final response
         final_response = self.response_generator.generate(
             response_data,
             context,
             processing_method
         )
 
-        # Step 6: Log interaction
+        # Step 7: Log interaction
         self._log_interaction(
             user_id=user_id, session_id=session_id, message=message, response=final_response,
             processing_method=processing_method, intent=intent, confidence=confidence, context=context
         )
 
-        # Generate response
-        print("Generating response...")
-        response = self.response_generator.generate(
-            response_data={
-                'intent': intent,
-                'confidence': confidence,
-                'entities': nlp_result.get('entities', []),
-                'text': message,
-                # Include other NLP data if needed
-                'original_text': nlp_result.get('original_text', message),
-                'sentiment': nlp_result.get('sentiment', {}),
-                'keywords': nlp_result.get('keywords', []),
-                'tokens': nlp_result.get('tokens', []),
-                'processed': nlp_result.get('processed', True)
-            },
-            context={'user_id': user_id, 'session_id': session_id},
-            method='nlp_based'  # or whatever method you're using
-        )
-        print(f"Response generated: '{response[:50]}...'")
-
         # Get follow-ups
         print("Getting follow-ups...")
-        follow_ups = self._suggest_follow_ups(intent,confidence,state,context)
+        follow_ups = self._suggest_follow_ups(intent, confidence, current_state, context)
         print(f"Follow-ups: {follow_ups}")
 
         return {
             'response': final_response,
             'confidence': response_data.get('confidence', 0.0),
             'processing_method': processing_method,
-            'suggested_follow_ups': self._suggest_follow_ups(intent=intent,
-            confidence=confidence,
-            current_state=state,
-            context=context),
+            'suggested_follow_ups': follow_ups,
             'context_id': context_key
         }
 

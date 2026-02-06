@@ -5,60 +5,8 @@ Configuration settings for the Intelligent Library Chat Assistant
 import os
 from datetime import timedelta
 from dotenv import load_dotenv
-from flask import Flask
-from flask_bcrypt import Bcrypt
-from flask_cors import CORS
-from flask_login import LoginManager
-from flask_marshmallow import Marshmallow
-from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
-
-from app.models.dialog_manager import DialogueManager
-from app.models.rule_engine import AdvancedRuleEngine
-from app.models.nlp_engine import HybridNLPEngine
-from app.models.response_generator import ResponseGenerator
-from app.utills.metrics import MetricsTracker
-from app.api.opac_client import OPACClient
-
 
 load_dotenv()
-
-# Initialize Flask app
-app = Flask(__name__)
-db= SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-ma = Marshmallow(app)
-app.secret_key = 'your-secret-key-here-change-in-production'
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)
-
-# Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/library_chatbot_db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-CORS(app, supports_credentials=True,
-     origins=["http://localhost", "http://127.0.0.1:5500"],  # Add your frontend URL
-     allow_headers=["Content-Type", "Authorization"],
-     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
-
-login_manager = LoginManager(app)
-login_manager.login_view = 'loginresource'
-api = Api(app)
-
-
-# Initialize components
-rule_engine = AdvancedRuleEngine('app/data/rules.json')
-nlp_engine = HybridNLPEngine()
-response_generator = ResponseGenerator('app/data/response_templates.json')
-metrics_tracker = MetricsTracker()
-opac_client = OPACClient()
-
-# Create dialogue manager
-dialogue_manager = DialogueManager(rule_engine, nlp_engine, response_generator)
-
-
-
-
 
 class Config:
     """Base configuration"""
@@ -74,7 +22,7 @@ class Config:
     DB_PASSWORD = os.getenv('DB_PASSWORD', 'password')
 
     # SQLAlchemy settings
-    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///library_chatbot.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
         'pool_size': 10,
@@ -123,6 +71,10 @@ class Config:
     EVALUATION_ENABLED = True
     FEEDBACK_COLLECTION = True
 
+    # Other settings
+    SESSION_TYPE = 'filesystem'
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=24)
+
 
 class DevelopmentConfig(Config):
     """Development configuration"""
@@ -164,10 +116,5 @@ class ProductionConfig(Config):
     REMEMBER_COOKIE_HTTPONLY = True
 
     # Ensure secret keys are set
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    if not SECRET_KEY:
-        raise ValueError("SECRET_KEY must be set in production")
-
-    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
-    if not JWT_SECRET_KEY:
-        raise ValueError("JWT_SECRET_KEY must be set in production")
+    SECRET_KEY = os.getenv('SECRET_KEY', 'prod-secret-key-change-me')
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'prod-jwt-secret-key-change-me')

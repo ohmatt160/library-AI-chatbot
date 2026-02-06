@@ -1,0 +1,17 @@
+flask
+flask_sqlalchemy
+flask_marshmallow
+marshmallow-sqlalchemy
+flask_bcrypt
+flask_login
+flask_restful
+flask_cors
+spacy
+scikit-learn
+sentence-transformers
+redis
+python-dotenv
+joblib
+typer
+chardet
+pymysql
