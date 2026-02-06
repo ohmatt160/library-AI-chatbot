@@ -14,12 +14,31 @@ class MetricsTracker:
     """Tracks real-time metrics for the chatbot"""
 
     def __init__(self):
-        self.redis_client = redis.Redis(
-            host=os.getenv('REDIS_HOST', 'localhost'),
-            port=int(os.getenv('REDIS_PORT', 6379)),
-            password=os.getenv('REDIS_PASSWORD', None),
-            decode_responses=True
-        )
+        try:
+            self.redis_client = redis.Redis(
+                host=os.getenv('REDIS_HOST', 'localhost'),
+                port=int(os.getenv('REDIS_PORT', 6379)),
+                password=os.getenv('REDIS_PASSWORD', None),
+                decode_responses=True
+            )
+            self.redis_client.ping()
+        except Exception:
+            print("⚠️ Redis not available for metrics, using in-memory storage")
+            class MockRedis:
+                def __init__(self): self.data = {}
+                def get(self, key): return self.data.get(key)
+                def set(self, key, val): self.data[key] = val
+                def exists(self, key): return key in self.data
+                def incr(self, key):
+                    val = int(self.data.get(key, 0)) + 1
+                    self.data[key] = val
+                    return val
+                def hset(self, key, mapping=None, **kwargs):
+                    if key not in self.data: self.data[key] = {}
+                    if mapping: self.data[key].update(mapping)
+                    self.data[key].update(kwargs)
+                def expire(self, key, time): pass
+            self.redis_client = MockRedis()
 
         # Initialize counters
         self._init_counters()
