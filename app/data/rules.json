@@ -1,0 +1,124 @@
+{
+  "rules": [
+    {
+      "id": "rule_001",
+      "pattern": "(?i)(library|opening|close|hours?|schedule)",
+      "response": "The library is open from 8:00 AM to 10:00 PM on weekdays (Monday-Friday), and from 10:00 AM to 8:00 PM on weekends (Saturday-Sunday).",
+      "priority": 1,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_002",
+      "pattern": "(?i)(borrow|loan|check\\s*out|take\\s*out)",
+      "response": "Students can borrow up to 5 books for 14 days. Staff members can borrow up to 10 books for 30 days. You can renew books once if no one has placed a hold on them.",
+      "priority": 1,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_003",
+      "pattern": "(?i)(return|due|late|fine|overdue)",
+      "response": "Books are due on the date stamped on your receipt. Overdue fines are 50 per day per book. You can return books at the circulation desk or in the book drop outside the library.",
+      "priority": 1,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_004",
+      "pattern": "(?i)(contact|phone|email|address|location)",
+      "response": "You can contact the library at:\n Phone: 123-456-7890\n Email: library@babcock.edu.ng\n Address: Babcock University Library, Ilishan-Remo, Ogun State\n Visit during opening hours",
+      "priority": 1,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_005",
+      "pattern": "(?i)(wifi|internet|wireless|connection)",
+      "response": "Connect to 'Babcock-Library' WiFi network. Use your student ID as both username and password. For technical issues, contact the IT help desk.",
+      "priority": 2,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_006",
+      "pattern": "(?i)(print|printing|printer|photocopy)",
+      "response": "Printing and photocopying services are available at the Digital Resource Center on the ground floor. Cost is 10 per page for black/white and 50 per page for color. Payment can be made with your student ID card.",
+      "priority": 2,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_007",
+      "pattern": "(?i)(quiet|silent|study\\s*area|noise)",
+      "response": "The library has designated quiet study areas on floors 2 and 3. Group study rooms are available on the ground floor and can be booked at the circulation desk. Please maintain silence in quiet zones.",
+      "priority": 2,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_008",
+      "pattern": "(?i)(database|journal|article|research)",
+      "response": "The library provides access to several online databases including JSTOR, IEEE Xplore, ScienceDirect, and SpringerLink. You can access them from any campus computer or through the library website using your student credentials.",
+      "priority": 2,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_009",
+      "pattern": "(?i)(hello|hi|hey|greetings|good\\s*(morning|afternoon|evening))",
+      "response": "Hello!  I'm the Babcock University Library Assistant. How can I help you today?",
+      "priority": 3,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_010",
+      "pattern": "(?i)(thank|thanks|appreciate|grateful)",
+      "response": "You're welcome!  Is there anything else I can help you with?",
+      "priority": 3,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_011",
+      "pattern": "(?i)(bye|goodbye|see\\s*you|farewell)",
+      "response": "Goodbye!  Feel free to come back if you need more assistance with the library.",
+      "priority": 3,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_012",
+      "pattern": "(?i)(membership|register|sign\\s*up|library\\s*card)",
+      "response": "All Babcock University students and staff are automatically library members. Your student/staff ID serves as your library card. Please bring it with you when visiting the library.",
+      "priority": 2,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_013",
+      "pattern": "(?i)(reserve|hold|book\\s*a\\s*book|request)",
+      "response": "You can place a hold on books that are currently checked out. Visit the circulation desk or use the online catalog. You'll be notified when the book is available.",
+      "priority": 2,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_014",
+      "pattern": "(?i)(find|locate|where\\s*is|shelf|location\\s*of)",
+      "response": "Books are organized using the Library of Congress classification system. You can search for a book in the online catalog to get its call number and location. Library staff can also help you locate books.",
+      "priority": 2,
+      "requires_context": false,
+      "conditions": []
+    },
+    {
+      "id": "rule_015",
+      "pattern": "(?i)(librarian|staff|help\\s*desk|assistance)",
+      "response": "Library staff are available at the circulation and reference desks during opening hours. For specialized research help, you can book an appointment with a subject librarian.",
+      "priority": 2,
+      "requires_context": false,
+      "conditions": []
+    }
+  ]
+}

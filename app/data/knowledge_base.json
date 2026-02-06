@@ -1,0 +1,174 @@
+{
+  "entries": [
+    {
+      "id": "kb_001",
+      "category": "Library Hours",
+      "questions": [
+        "When is the library open?",
+        "What are your hours?",
+        "Are you open now?",
+        "Library opening times",
+        "Closing time"
+      ],
+      "answer": "The library is open:\n\n**Regular Hours:**\nâ¢ Monday-Friday: 8:00 AM - 10:00 PM\nâ¢ Saturday-Sunday: 10:00 AM - 8:00 PM\n\n**Extended Hours (During Exams):**\nâ¢ Monday-Sunday: 7:00 AM - 12:00 AM\n\n**Holiday Schedule:**\nThe library is closed on official university holidays.",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Library Policy",
+        "priority": 1
+      }
+    },
+    {
+      "id": "kb_002",
+      "category": "Borrowing Policy",
+      "questions": [
+        "How many books can I borrow?",
+        "What is the loan period?",
+        "Can I renew books?",
+        "Borrowing limits",
+        "Loan duration"
+      ],
+      "answer": "**Borrowing Limits:**\n\n**For Students:**\nâ¢ Maximum books: 5\nâ¢ Loan period: 14 days\nâ¢ Renewals allowed: 1 time (if no holds)\n\n**For Staff:**\nâ¢ Maximum books: 10\nâ¢ Loan period: 30 days\nâ¢ Renewals allowed: 2 times\n\n**Overdue Items:**\nâ¢ Fine: â¦50 per day per book\nâ¢ Maximum fine: â¦1000 per book\nâ¢ Borrowing privileges suspended until fines paid",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Circulation Policy",
+        "priority": 1
+      }
+    },
+    {
+      "id": "kb_003",
+      "category": "Library Services",
+      "questions": [
+        "What services does the library offer?",
+        "Can I print in the library?",
+        "Is there WiFi?",
+        "Study rooms",
+        "Research help"
+      ],
+      "answer": "**Library Services:**\n\n1. **Borrowing Services** - Books, journals, media\n2. **Research Assistance** - Librarian consultations\n3. **Printing & Copying** - B&W (â¦10/page), Color (â¦50/page)\n4. **WiFi Access** - 'Babcock-Library' network\n5. **Study Spaces** - Quiet zones, group study rooms\n6. **Computer Lab** - 50+ computers with internet\n7. **Database Access** - 50+ academic databases\n8. **Interlibrary Loan** - Request materials from other libraries\n9. **Reference Desk** - Research and citation help\n10. **Workshops** - Regular training sessions",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Services Brochure",
+        "priority": 2
+      }
+    },
+    {
+      "id": "kb_004",
+      "category": "Finding Books",
+      "questions": [
+        "How do I find a book?",
+        "Search the catalog",
+        "Locate books on shelf",
+        "Call numbers",
+        "Book locations"
+      ],
+      "answer": "**Finding Books in the Library:**\n\n1. **Search Online Catalog:**\n   â¢ Visit library website\n   â¢ Use search box\n   â¢ Filter by author, title, subject\n\n2. **Understand Call Numbers:**\n   â¢ Books organized by Library of Congress system\n   â¢ Example: QA76.73.P98 (Computer Science section)\n\n3. **Locate in Library:**\n   â¢ Ground Floor: Reference, New Arrivals\n   â¢ 1st Floor: Social Sciences, Humanities\n   â¢ 2nd Floor: Sciences, Engineering\n   â¢ 3rd Floor: Quiet Study, Special Collections\n\n4. **Get Help:**\n   â¢ Ask at circulation desk\n   â¢ Use library floor maps\n   â¢ Request librarian assistance",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Library Guide",
+        "priority": 2
+      }
+    },
+    {
+      "id": "kb_005",
+      "category": "Digital Resources",
+      "questions": [
+        "Online databases",
+        "E-books access",
+        "Journal articles",
+        "Remote access",
+        "Electronic resources"
+      ],
+      "answer": "**Digital Resources Available:**\n\n**Databases (On-campus):**\nâ¢ JSTOR - Arts & Sciences\nâ¢ IEEE Xplore - Engineering\nâ¢ ScienceDirect - Science\nâ¢ SpringerLink - Multidisciplinary\nâ¢ PubMed - Medicine\nâ¢ ACM Digital Library - Computing\nâ¢ ProQuest - Dissertations & Theses\n\n**E-Book Collections:**\nâ¢ EBSCO eBooks\nâ¢ Springer eBooks\nâ¢ O'Reilly Learning\n\n**Remote Access:**\nUse your Babcock University credentials to access all digital resources from anywhere.\n\n**Research Guides:**\nSubject-specific guides available on library website.",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Digital Resources",
+        "priority": 2
+      }
+    },
+    {
+      "id": "kb_006",
+      "category": "Library Facilities",
+      "questions": [
+        "Study areas",
+        "Computer lab",
+        "Group study rooms",
+        "Printing facilities",
+        "Library layout"
+      ],
+      "answer": "**Library Facilities:**\n\n**Ground Floor:**\nâ¢ Circulation Desk\nâ¢ Reference Collection\nâ¢ New Arrivals\nâ¢ Group Study Rooms (Bookable)\nâ¢ Computer Lab (50+ PCs)\nâ¢ Printing/Copying Station\n\n**First Floor:**\nâ¢ Social Sciences Collection\nâ¢ Humanities Collection\nâ¢ Quiet Study Area\nâ¢ Current Periodicals\n\n**Second Floor:**\nâ¢ Sciences Collection\nâ¢ Engineering Collection\nâ¢ Quiet Study Carrels\nâ¢ Thesis Collection\n\n**Third Floor:**\nâ¢ Special Collections\nâ¢ Archives\nâ¢ Silent Study Zone\nâ¢ Faculty Research Area\n\n**Other Facilities:**\nâ¢ WiFi throughout building\nâ¢ Drinking water stations\nâ¢ Restrooms on each floor\nâ¢ Elevator access\nâ¢ Wheelchair accessible",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Facility Guide",
+        "priority": 3
+      }
+    },
+    {
+      "id": "kb_007",
+      "category": "Membership",
+      "questions": [
+        "Who can use the library?",
+        "Library membership",
+        "Alumni access",
+        "Visitor policy",
+        "Library card"
+      ],
+      "answer": "**Library Membership:**\n\n**Primary Users (Automatic Membership):**\nâ¢ All Babcock University students\nâ¢ All Babcock University staff\nâ¢ Use your university ID as library card\n\n**Secondary Users (With Conditions):**\nâ¢ Alumni: Free access with alumni card\nâ¢ Visiting scholars: Letter from department required\nâ¢ Consortium members: Reciprocal agreement\n\n**Guest Users:**\nâ¢ Limited access to physical collection\nâ¢ No borrowing privileges\nâ¢ Internet access: â¦500/day\n\n**All users must:**\nâ¢ Register at circulation desk\nâ¢ Follow library rules and regulations\nâ¢ Respect quiet study areas",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Membership Policy",
+        "priority": 3
+      }
+    },
+    {
+      "id": "kb_008",
+      "category": "Research Help",
+      "questions": [
+        "How to do research?",
+        "Literature review",
+        "Finding articles",
+        "Citation help",
+        "Research consultation"
+      ],
+      "answer": "**Getting Research Help:**\n\n1. **Research Consultations:**\n   â¢ Book appointment with subject librarian\n   â¢ 30-60 minute sessions\n   â¢ Help with search strategies, databases, citations\n\n2. **Research Guides:**\n   â¢ Subject-specific guides on library website\n   â¢ Database recommendations\n   â¢ Citation style guides\n\n3. **Workshops:**\n   â¢ Database training sessions\n   â¢ Citation management (Zotero/Mendeley)\n   â¢ Research skills development\n\n4. **Online Help:**\n   â¢ Live chat with librarian\n   â¢ Email research questions\n   â¢ Video tutorials on website\n\n5. **Citation Help:**\n   â¢ Style guides at reference desk\n   â¢ Online citation generators\n   â¢ Individual consultation available",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Research Services",
+        "priority": 2
+      }
+    },
+    {
+      "id": "kb_009",
+      "category": "Library Rules",
+      "questions": [
+        "Library policies",
+        "Code of conduct",
+        "Food and drink",
+        "Noise policy",
+        "Cell phone use"
+      ],
+      "answer": "**Library Rules & Conduct:**\n\n**General Conduct:**\nâ¢ Respect quiet study areas\nâ¢ Keep conversations at low volume\nâ¢ Use cell phones in designated areas only\nâ¢ No disruptive behavior\n\n**Food & Drink:**\nâ¢ Covered drinks allowed\nâ¢ Snacks allowed in cafeteria only\nâ¢ No hot meals in study areas\nâ¢ Clean up after yourself\n\n**Resource Use:**\nâ¢ Handle library materials carefully\nâ¢ Return books on time\nâ¢ Report damaged items\nâ¢ No marking in books\n\n**Computer Use:**\nâ¢ Academic purposes priority\nâ¢ No inappropriate websites\nâ¢ Save files to personal devices\nâ¢ Log out when finished\n\n**Violations may result in:**\nâ¢ Warning\nâ¢ Temporary suspension\nâ¢ Loss of privileges\nâ¢ Disciplinary action",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Conduct Policy",
+        "priority": 3
+      }
+    },
+    {
+      "id": "kb_010",
+      "category": "Contact Information",
+      "questions": [
+        "How to contact library?",
+        "Library phone number",
+        "Email address",
+        "Staff directory",
+        "Location address"
+      ],
+      "answer": "**Contact the Library:**\n\n**Main Library:**\nð Address: Babcock University Library\n           Ilishan-Remo, Ogun State\n           Nigeria\nð Phone: +234 (0)123 456 7890\nð§ Email: library@babcock.edu.ng\nð Website: library.babcock.edu.ng\n\n**Department Contacts:**\nâ¢ Circulation Desk: Ext. 1001\nâ¢ Reference Desk: Ext. 1002\nâ¢ Technical Services: Ext. 1003\nâ¢ Digital Resources: Ext. 1004\nâ¢ Interlibrary Loan: Ext. 1005\n\n**Social Media:**\nâ¢ Twitter: @BabcockLibrary\nâ¢ Facebook: Babcock University Library\nâ¢ Instagram: @babcocklibrary\n\n**Office Hours:**\nMonday-Friday: 8:00 AM - 5:00 PM",
+      "metadata": {
+        "last_updated": "2024-01-15",
+        "source": "Contact Info",
+        "priority": 1
+      }
+    }
+  ]
+}

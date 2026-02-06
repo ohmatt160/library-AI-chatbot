@@ -1,0 +1,72 @@
+{
+  "book_search": [
+    "Find books about computer science",
+    "Search for Python programming books",
+    "I need books on artificial intelligence",
+    "Look for novels by Chinua Achebe",
+    "Find resources for my research paper",
+    "Search the catalog for engineering textbooks",
+    "Where can I find physics books?",
+    "Books about Nigerian history"
+  ],
+  "borrowing_info": [
+    "How many books can I borrow?",
+    "What is the loan period?",
+    "Can I renew my books?",
+    "How do I return books?",
+    "What are the overdue fines?",
+    "Borrowing policy for students",
+    "How long can I keep a book?",
+    "Renewal process"
+  ],
+  "library_hours": [
+    "When is the library open?",
+    "What are your hours today?",
+    "Are you open on weekends?",
+    "Closing time for the library",
+    "Library schedule for holidays",
+    "What time do you open?",
+    "Extended hours during exams",
+    "Is the library open now?"
+  ],
+  "policy_query": [
+    "What is the food policy?",
+    "Can I bring my laptop?",
+    "Is there a dress code?",
+    "Library rules and regulations",
+    "What is not allowed in the library?",
+    "Code of conduct",
+    "Visitor policy",
+    "Group study room rules"
+  ],
+  "research_help": [
+    "I need help with my research",
+    "How do I find journal articles?",
+    "Help with literature review",
+    "Database access for off-campus",
+    "Research consultation appointment",
+    "How to search academic databases",
+    "Finding peer-reviewed articles",
+    "Research methodology resources"
+  ],
+  "citation_help": [
+    "How to cite in APA format?",
+    "MLA citation examples",
+    "Chicago style guide",
+    "Help with references",
+    "Citation generator",
+    "Formatting bibliography",
+    "In-text citation help",
+    "Reference management software"
+  ],
+  "general_info": [
+    "What services do you offer?",
+    "Library facilities",
+    "How to use the library",
+    "Getting a library card",
+    "Library membership",
+    "Library layout and floors",
+    "Available resources",
+    "Library orientation"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "book_search": {
+    "main": "I found {count} book(s) matching your search:\n\n{book_list}\n\nWould you like more details about any of these books?",
+    "no_results": "I couldn't find any books matching '{query}'. Try using different keywords or check the spelling.",
+    "follow_up": "You can ask me about a specific book's availability, location, or details.",
+    "single_result": "I found this book:\nð **{title}**\nð¤ Author: {author}\nð Year: {year}\nð¢ Call Number: {call_number}\nð Location: {location}\nâ Status: {status}"
+  },
+  "library_hours": {
+    "main": "ð **Library Hours**\n\n**Weekdays (Mon-Fri):** 8:00 AM - 10:00 PM\n**Weekends (Sat-Sun):** 10:00 AM - 8:00 PM\n\n**Special Hours:**\nâ¢ Exam Period: 7:00 AM - 12:00 AM\nâ¢ Holidays: Closed\n\nCurrent time: {current_time}",
+    "follow_up": "Would you like to know about specific services or holiday schedules?"
+  },
+  "borrowing_info": {
+    "main": "ð **Borrowing Policy**\n\n**Students:**\nâ¢ Maximum books: 5\nâ¢ Loan period: 14 days\nâ¢ Renewals: 1 renewal (if no holds)\n\n**Staff:**\nâ¢ Maximum books: 10\nâ¢ Loan period: 30 days\nâ¢ Renewals: 2 renewals\n\n**Overdue Fines:** â¦50 per day per book",
+    "follow_up": "Need to know how to renew or check your due dates?"
+  },
+  "policy_query": {
+    "main": "Here's our library policy regarding {topic}:\n\n{policy_details}\n\nFor the complete policy document, visit the library website or ask at the circulation desk.",
+    "follow_up": "Is there a specific aspect of the policy you'd like clarified?"
+  },
+  "research_help": {
+    "main": "I can help you with research! Here are some resources:\n\n**Databases Available:**\nâ¢ JSTOR (Arts & Sciences)\nâ¢ IEEE Xplore (Engineering)\nâ¢ ScienceDirect (Science)\nâ¢ SpringerLink (All disciplines)\nâ¢ PubMed (Medicine)\n\n**Research Guides:** Available for each department on the library website.",
+    "follow_up": "Would you like help with a specific database or finding articles on a topic?"
+  },
+  "citation_help": {
+    "main": "**Citation Styles Support**\n\nThe library provides help with:\nâ¢ APA 7th Edition\nâ¢ MLA 9th Edition\nâ¢ Chicago 17th Edition\nâ¢ IEEE\n\n**Resources:**\nâ¢ Citation guides at reference desk\nâ¢ Online citation generators on library website\nâ¢ Zotero/Mendeley workshops\n\nExample {style} citation for a book:\n{example}",
+    "follow_up": "Need help with a specific citation or formatting question?"
+  },
+  "general_info": {
+    "main": "I understand you're asking about {topic}. Here's what I can tell you:\n\n{information}\n\nIs this what you were looking for?",
+    "follow_up": "Would you like more details or information on a related topic?"
+  },
+  "clarification": {
+    "main": "I want to make sure I understand correctly. Are you asking about {topic1} or {topic2}?",
+    "follow_up": "Please rephrase your question or provide more details."
+  },
+  "fallback": {
+    "main": "I'm not sure I fully understand your question about {topic}. Could you provide more details or rephrase it?",
+    "follow_up": "I can help you with:\nâ¢ Finding books and articles\nâ¢ Library hours and policies\nâ¢ Borrowing and returning items\nâ¢ Research and citation help\nâ¢ Library services and facilities"
+  },
+  "greeting": {
+    "main": "ð **Hello! I'm the Babcock University Library Assistant.**\n\nI can help you with:\nâ¢ ð Finding books and resources\nâ¢ ð Library hours and policies\nâ¢ ð Research and database access\nâ¢ ð Citation and reference help\nâ¢ ð¬ General library information\n\n**How can I assist you today?**",
+    "follow_up": "Try asking me something like:\n\"What are the library hours?\"\n\"How do I borrow a book?\"\n\"Find books about computer science\""
+  },
+  "error": {
+    "main": "I apologize, but I encountered an error while processing your request. Please try again or contact library staff for assistance.",
+    "follow_up": "You can try rephrasing your question or ask about a different topic."
+  }
+
+
+
+}
