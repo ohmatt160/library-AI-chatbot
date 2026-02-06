@@ -1,0 +1,53 @@
+[
+  {
+    "timestamp": 1770391515.2007172,
+    "datetime": "2026-02-06 15:25:15",
+    "user_id": "anon_76f2a3bd-53de-4ef7-b45c-91a2b44d4e7f",
+    "session_id": "76f2a3bd-53de-4ef7-b45c-91a2b44d4e7f",
+    "user_message": "I want to find books about Python",
+    "bot_response": "I couldn't find any books matching '{query}'. Try using different keywords or check the spelling.",
+    "intent": "book_search",
+    "confidence": 0.8,
+    "processing_method": "nlp_based",
+    "context": {
+      "history": [],
+      "state": "ConversationState.GREETING",
+      "entities": {},
+      "user_preferences": {}
+    }
+  },
+  {
+    "timestamp": 1770391515.2497609,
+    "datetime": "2026-02-06 15:25:15",
+    "user_id": "anon_222dce08-6746-4898-84b5-b6609cd7897a",
+    "session_id": "222dce08-6746-4898-84b5-b6609cd7897a",
+    "user_message": "How do I contact the circulation desk?",
+    "bot_response": "\ud83d\udcde **CONTACT INFORMATION**\n\n\u2022 **Circulation Desk**\n  \ud83d\udcde (123) 456-7890\n  \ud83d\udce7 circulation@babcock.edu.ng\n  \ud83d\udd50 Hours: 8 AM - 10 PM\n\u2022 **Research Help**\n  \ud83d\udcde (123) 456-7891\n  \ud83d\udce7 research@babcock.edu.ng\n  \ud83d\udd50 Hours: 9 AM - 5 PM",
+    "intent": "contact_info",
+    "confidence": 0.9,
+    "processing_method": "nlp_based",
+    "context": {
+      "history": [],
+      "state": "ConversationState.GREETING",
+      "entities": {},
+      "user_preferences": {}
+    }
+  },
+  {
+    "timestamp": 1770391582.9773548,
+    "datetime": "2026-02-06 15:26:22",
+    "user_id": "anon_f4bb2e2e-5f30-4195-b798-32b39d4d83e4",
+    "session_id": "f4bb2e2e-5f30-4195-b798-32b39d4d83e4",
+    "user_message": "I want to find books about Python",
+    "bot_response": "I found 1 book(s) matching your search:\n\n\u2022 **Python Programming** by John Smith\n  \ud83d\udccd Location: Shelf 4A, Computer Science\n  \ud83d\udcc5 Available: 3 copies\n\nWould you like more details about any of these books?",
+    "intent": "book_search",
+    "confidence": 0.8,
+    "processing_method": "nlp_based",
+    "context": {
+      "history": [],
+      "state": "ConversationState.GREETING",
+      "entities": {},
+      "user_preferences": {}
+    }
+  }
+]

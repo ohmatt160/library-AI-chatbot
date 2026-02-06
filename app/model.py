@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     last_login = db.Column(db.DateTime)
+    borrowed_books = db.Column(db.JSON, default=list) # List of book IDs and due dates
 
     # Relationships
     sessions = db.relationship('UserSession', backref='user', lazy=True)
@@ -72,6 +73,29 @@ class Feedback(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
+class Book(db.Model):
+    __tablename__ = 'books'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(255), nullable=False)
+    author = db.Column(db.String(255), nullable=False)
+    isbn = db.Column(db.String(20), unique=True)
+    topic = db.Column(db.String(100))
+    copies_available = db.Column(db.Integer, default=1)
+    location = db.Column(db.String(100))
+    summary = db.Column(db.Text)
+
+
+class Contact(db.Model):
+    __tablename__ = 'contacts'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    department = db.Column(db.String(100), nullable=False)
+    phone = db.Column(db.String(20))
+    email = db.Column(db.String(100))
+    hours = db.Column(db.String(100))
+
+
 # ====================== MARSHMALLOW SCHEMAS ======================
 
 class UserSchema(ma.SQLAlchemySchema):
@@ -112,6 +136,31 @@ class FeedbackSchema(ma.SQLAlchemySchema):
     created_at = ma.auto_field()
 
 
+class BookSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Book
+
+    id = ma.auto_field()
+    title = ma.auto_field()
+    author = ma.auto_field()
+    isbn = ma.auto_field()
+    topic = ma.auto_field()
+    copies_available = ma.auto_field()
+    location = ma.auto_field()
+    summary = ma.auto_field()
+
+
+class ContactSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Contact
+
+    id = ma.auto_field()
+    department = ma.auto_field()
+    phone = ma.auto_field()
+    email = ma.auto_field()
+    hours = ma.auto_field()
+
+
 # Initialize schemas
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
@@ -119,6 +168,10 @@ activity_schema = ActivityLogSchema()
 activities_schema = ActivityLogSchema(many=True)
 feedback_schema = FeedbackSchema()
 feedbacks_schema = FeedbackSchema(many=True)
+book_schema = BookSchema()
+books_schema = BookSchema(many=True)
+contact_schema = ContactSchema()
+contacts_schema = ContactSchema(many=True)
 
 # ====================== REQUEST PARSERS ======================
 
