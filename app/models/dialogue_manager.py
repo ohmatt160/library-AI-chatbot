@@ -49,17 +49,12 @@ class DialogueManager:
         # Step 1: Intent and Entity Extraction
         nlp_result = self.nlp_engine.process(message)
 
-        # nlp_result = self.nlp_engine.analyze(message, context)
-
         if 'entities' not in nlp_result:
             nlp_result['entities'] = []
 
-        nlp_result['entities'].append({
-             'label': 'current_time',
-             'text': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            })
-
-
+        # Add context-based entities
+        if context.get('user_name'):
+            nlp_result['entities'].append({'label': 'user_name', 'text': context['user_name']})
 
         intent = nlp_result.get('intent', 'unknown')
         confidence = nlp_result.get('confidence', 0.5)
@@ -89,20 +84,38 @@ class DialogueManager:
         processing_method = nlp_result.get('processing_method', 'hybrid')
 
 
-        # Step 2: Check if rule-based response applies
-        rule_response = self.rule_engine.match(message, nlp_result['intent'])
+        # Step 2: Database Integration (Factual Querying)
+        from app.utils.database import search_catalog, get_contact_info, get_user_account
+
+        db_results = None
+        if intent == 'book_search':
+            db_results = search_catalog(query=message)
+            if not db_results and nlp_result.get('keywords'):
+                # Try searching with keywords if full query failed
+                for kw in nlp_result['keywords']:
+                    if len(kw) > 3:
+                        db_results = search_catalog(query=kw)
+                        if db_results: break
+
+            nlp_result['db_results'] = db_results
+        elif intent == 'contact_info':
+            db_results = get_contact_info()
+            nlp_result['db_results'] = db_results
+        elif intent == 'book_availability':
+            db_results = search_catalog(query=message) # Simplified
+            nlp_result['db_results'] = db_results
 
         # Step 3: Determine processing path (Hybrid Decision)
+        rule_response = self.rule_engine.match(message, intent)
+
         if rule_response and rule_response['confidence'] > 0.9:
-            # Use rule-based response
             processing_method = "rule_based"
             response_data = rule_response
-        elif nlp_result['confidence'] > 0.7:
-            # Use NLP-based response
+        elif nlp_result['confidence'] > 0.6:
             processing_method = "nlp_based"
             response_data = nlp_result
         else:
-            # Fallback to clarification or knowledge base
+            # RAG Fallback would go here
             processing_method = "clarification"
             response_data = self._handle_low_confidence(message, confidence, context)
 

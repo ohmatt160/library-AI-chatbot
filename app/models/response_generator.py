@@ -1,138 +1,111 @@
 import json, os
 import re
 from typing import Dict, Optional, List
+from datetime import datetime
 
 
 class ResponseGenerator:
     def __init__(self, templates_file: str = 'app/data/response_templates.json'):
         print(f"📝 Loading response templates from: {templates_file}")
 
-        # Multiple fallback locations
-        possible_files = [
-            templates_file,
-            'app/data/response_templates.json',
-            'app/data/templates.json'
-        ]
-
-        self.templates = {}
-        loaded = False
-
-        for file_path in possible_files:
-            if os.path.exists(file_path):
-                try:
-                    # Try multiple encodings
-                    content = self._read_file_with_encoding(file_path)
-                    if content:
-                        # Clean the content before parsing JSON
-                        content = self._clean_unicode_content(content)
-                        self.templates = json.loads(content)
-                        print(f"✅ Loaded templates from: {file_path}")
-
-                        # Debug: Check what was loaded
-                        print(f"DEBUG: Available templates: {list(self.templates.keys())}")
-                        loaded = True
-                        break
-                except Exception as e:
-                    print(f"⚠️ Failed to load {file_path}: {e}")
-                    continue
-
-        if not loaded:
-            print("⚠️ Could not load template files, using defaults")
-            self.templates = self._get_default_templates()
+        self.templates = self._get_default_templates()
+        if os.path.exists(templates_file):
+            try:
+                content = self._read_file_with_encoding(templates_file)
+                if content:
+                    content = self._clean_unicode_content(content)
+                    file_templates = json.loads(content)
+                    self.templates.update(file_templates)
+                    print(f"✅ Loaded templates from: {templates_file}")
+            except Exception as e:
+                print(f"⚠️ Failed to load {templates_file}: {e}")
 
     def _clean_unicode_content(self, content: str) -> str:
         """Clean Unicode content of common encoding issues"""
         if not content:
             return content
-
-        # Common UTF-8 mis-encodings
         replacements = {
-            'â€¢': '•',  # Bullet point
-            'â€"': '—',  # Em dash
-            'â€™': "'",  # Right single quote
-            'â€˜': "'",  # Left single quote
-            'â€œ': '"',  # Left double quote
-            'â€': '"',  # Right double quote
-            'Ã©': 'é',  # é
-            'Ã¨': 'è',  # è
-            'Ã¢': 'â',  # â
-            'Ã': 'à',  # à
-            'Ã±': 'ñ',  # ñ
-            'Ã³': 'ó',  # ó
-            'Ãº': 'ú',  # ú
-            'Ã': 'í',  # í
-            'Ã¶': 'ö',  # ö
-            'Ã¼': 'ü',  # ü
-            'ÃŸ': 'ß',  # ß
-            'Ã¦': 'æ',  # æ
-            'Ã¸': 'ø',  # ø
-            'Ã¥': 'å',  # å
+            'â€¢': '•', 'â€"': '—', 'â€™': "'", 'â€˜': "'", 'â€œ': '"', 'â€': '"',
+            'Ã©': 'é', 'Ã¨': 'è', 'Ã¢': 'â', 'Ã': 'à', 'Ã±': 'ñ', 'Ã³': 'ó',
+            'Ãº': 'ú', 'Ã¶': 'ö', 'Ã¼': 'ü', 'ÃŸ': 'ß', 'Ã¦': 'æ', 'Ã¸': 'ø', 'Ã¥': 'å',
         }
-
-        # Apply replacements
         for bad, good in replacements.items():
             content = content.replace(bad, good)
-
-        # Fix common emoji issues
-        emoji_fixes = {
-            '\ud83d\udcd6': '📚',  # Book emoji
-            '\ud83d\udc4b': '👋',  # Waving hand
-        }
-
+        emoji_fixes = {'\ud83d\udcd6': '📚', '\ud83d\udc4b': '👋'}
         for bad, good in emoji_fixes.items():
             content = content.replace(bad, good)
-
         return content
 
     def _read_file_with_encoding(self, filepath: str) -> Optional[str]:
-        """Read file trying multiple encodings"""
         encodings = ['utf-8-sig', 'utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
-
         for encoding in encodings:
             try:
                 with open(filepath, 'r', encoding=encoding) as f:
                     return f.read()
             except UnicodeDecodeError:
                 continue
-
-        # Last resort: read as binary and clean
-        try:
-            with open(filepath, 'rb') as f:
-                content = f.read()
-
-            # Remove invalid UTF-8 bytes
-            clean_bytes = bytes([b for b in content if b < 0x80 or b >= 0xA0])
-            return clean_bytes.decode('utf-8', errors='ignore')
-        except Exception as e:
-            print(f"❌ All encoding attempts failed for {filepath}: {e}")
-            return None
+        return None
 
     def _get_default_templates(self) -> Dict:
-        """Get default templates"""
         return {
             "greeting": {
-                "main": "👋 **Hello! I'm the Babcock University Library Assistant.**\n\nI can help you with library services. How can I assist you today?",
-                "follow_up": "Try asking about library hours or borrowing books."
-            },
-            "book_search": {
-                "main": "I found {count} books matching your search.",
-                "no_results": "No books found matching '{query}'.",
-                "follow_up": "Try different keywords."
-            },
-            "library_hours": {
-                "main": "📚 **Library Hours**\n\nWeekdays: 8:00 AM - 10:00 PM\nWeekends: 10:00 AM - 8:00 PM",
+                "main": "👋 **Hello! I'm the Babcock University Library Assistant.** \n\nI can help you with:\n• 📚 Finding books and resources\n• 🕐 Library hours and policies  \n• 🔍 Research and database access\n• 📝 Citations and references\n• 📞 Contact information\n\n**How can I assist you today?** Try asking:\n'What are the library hours?'\n'Find books about computer science'\n'How do I renew a book?'\n'Help with my research paper'",
                 "follow_up": ""
             },
+            "book_search": {
+                "main": "📚 **BOOKS FOUND ({count})**\n\n{book_list}",
+                "no_results": "❌ That book isn't in our catalog. Would you like to:\n1. Try different search terms?\n2. Request an inter-library loan?\n3. Check eBook alternatives?",
+                "follow_up": "Need help locating any of these?"
+            },
+            "library_hours": {
+                "main": "🕐 **LIBRARY HOURS**\n\nWeekdays: **8:00 AM - 10:00 PM**\nWeekends: **10:00 AM - 8:00 PM**\n\n• Exam Period: 7:00 AM - 12:00 AM\n• Holidays: Closed\n\n_Current time: {current_time}_",
+                "follow_up": "Would you like to know about holiday schedules?"
+            },
+            "borrowing_policy": {
+                "main": "ℹ️ **BORROWING POLICY**\n\n**Students:**\n• Maximum books: **5**\n• Loan period: **14 days**\n• Renewals: **1 renewal** (if no holds)\n\n**Staff/Faculty:**\n• Maximum books: **10**\n• Loan period: **30 days**\n• Renewals: **2 renewals**\n\n**Overdue Fines:** ₦50 per day per book",
+                "follow_up": "Need to know how to renew your books?"
+            },
+            "contact_info": {
+                "main": "📞 **CONTACT INFORMATION**\n\n{contact_list}",
+                "follow_up": "Is there a specific department you're trying to reach?"
+            },
+            "research_assistance": {
+                "main": "🔍 **RESEARCH ASSISTANCE**\n\nI can help you find papers, databases, and guide you with citations.\n\n**Key Databases:**\n• JSTOR\n• IEEE Xplore\n• ScienceDirect\n\n**Tips:**\n• Use specific keywords\n• Check our citation guides for APA/MLA",
+                "follow_up": "What is your research topic?"
+            },
+            "book_renewal": {
+                "main": "📚 **BOOK RENEWAL**\n\nYou can renew books through your online account or at the circulation desk.\n\n**Policy:**\n• **1 renewal** for students\n• **2 renewals** for staff/faculty\n• Renewal is only possible if there are no active holds on the book.",
+                "follow_up": "Would you like me to check your borrowed books?"
+            },
+            "book_reservation": {
+                "main": "📚 **BOOK RESERVATION**\n\nIf a book is currently checked out, you can place a hold on it.\n\n**Steps:**\n1. Search for the book in our catalog\n2. Click 'Place Hold'\n3. You will be notified via email when it's available.",
+                "follow_up": "Need help finding a specific book to reserve?"
+            },
+            "study_rooms": {
+                "main": "🏫 **STUDY ROOMS**\n\nWe have private and group study rooms available for booking.\n\n• **Duration:** Max 3 hours per session\n• **Capacity:** 2-8 people per room\n• **Booking:** Available via the library website or at the information desk.",
+                "follow_up": "Would you like the link to the booking system?"
+            },
+            "library_services": {
+                "main": "ℹ️ **LIBRARY SERVICES**\n\nBeyond books, we offer several services to support your studies:\n\n• 🖨️ **Printing & Scanning:** Available on the 1st floor\n• 💻 **Computer Lab:** Access to research databases\n• 🎓 **Workshops:** Citation management and research strategies\n• ☕ **Study Café:** Open during regular hours",
+                "follow_up": "Are you interested in any specific service?"
+            },
             "fallback": {
-                "main": "I'm here to help with library services.",
-                "follow_up": "You can ask about library hours, borrowing, or finding resources."
+                "main": "I'm not sure I understand. Could you rephrase? For example, you could ask:\n• 'What are the library hours?'\n• 'How do I renew a book?'\n• 'Find books about biology'",
+                "follow_up": ""
             }
         }
 
     def generate(self, response_data: Dict, context: Dict, method: str) -> str:
-        """Generate contextual response"""
         try:
             print(f"📝 Generating response with method: {method}")
+
+            # Add time-based greeting if it's the start
+            prefix = ""
+            if response_data.get('intent') == 'greeting':
+                hour = datetime.now().hour
+                if hour < 12: prefix = "Good morning! "
+                elif hour < 17: prefix = "Good afternoon! "
+                else: prefix = "Good evening! "
 
             if method == 'rule_based':
                 response = self._generate_from_rule(response_data, context)
@@ -143,172 +116,83 @@ class ResponseGenerator:
             else:
                 response = self._generate_clarification(response_data, context)
 
-            # Clean the response before returning
-            response = self._clean_response(response)
-            print(f"✅ Generated response (cleaned): {response[:100]}...")
+            response = prefix + self._clean_response(response)
             return response
 
         except Exception as e:
-            print(f"❌ Error in generate method: {e}")
             import traceback
             traceback.print_exc()
-
-            # Return a safe, clean response
             return "I'm here to help with library services. How can I assist you today?"
 
-    def _generate_from_kb(self, kb_data: Dict, context: Dict) -> str:
-        """Generate response from knowledge base data"""
-        try:
-            # Extract knowledge base information
-            answer = kb_data.get('answer', '')
-            confidence = kb_data.get('confidence', 0)
-            source = kb_data.get('source', '')
-
-            # If we have a direct answer with good confidence
-            if answer and confidence > 0.7:
-                response = f"{answer}"
-
-                # Add source attribution if available
-                if source:
-                    response += f"\n\n_This information comes from: {source}_"
-
-                # Add follow-up if available
-                follow_up = kb_data.get('follow_up', '')
-                if follow_up:
-                    response += f"\n\n{follow_up}"
-
-                return response
-
-            # If confidence is low, be more cautious
-            elif answer and confidence > 0.5:
-                return f"Based on available information: {answer}\n\n_I'm not entirely certain about this. You may want to verify with library staff._"
-
-            # No answer found
-            else:
-                # Check if we have related topics
-                related = kb_data.get('related_topics', [])
-                if related:
-                    topics = ", ".join(related[:3])
-                    return f"I couldn't find a specific answer to your question.\n\n**Related topics you might find helpful:** {topics}\n\nWould you like me to search for any of these instead?"
-
-                # Generic fallback
-                return "I don't have specific information about that in my knowledge base. You might want to:\n1. Contact the library help desk\n2. Check the library website\n3. Visit the information desk in person"
-
-        except Exception as e:
-            print(f"⚠️ Error generating KB response: {e}")
-            return "I encountered an issue retrieving information from the knowledge base. Please try again or contact library staff."
-
-    def _generate_from_rule(self, rule_data: Dict, context: Dict) -> str:
-        """Generate response from rule match"""
-        template = rule_data.get('response_data', {}).get('template', '')
-        if not template:
-            template = rule_data.get('response_template', '')
-
-        variables = rule_data.get('response_data', {}).get('variables', {})
-
-        # Fill template variables
-        response = template
-        for key, value in variables.items():
-            if isinstance(value, (str, int, float)):
-                response = response.replace(f'{{{key}}}', str(value))
-
-        # Add contextual information if available
-        if context.get('user_name'):
-            response = f"Hi {context['user_name']}, {response}"
-
-        return response
-
     def _generate_from_nlp(self, nlp_data: Dict, context: Dict) -> str:
-        """Generate response from NLP analysis"""
         intent = nlp_data.get('intent', 'fallback')
-
-        # Get template for intent
         template_obj = self.templates.get(intent, self.templates.get('fallback', {}))
-        template = template_obj.get('main', "I can help you with that.")
 
-        # Extract entities for personalization - SAFELY
-        entities = nlp_data.get('entities', [])
-        entity_dict = {}
+        # Check for database results first if relevant
+        db_results = nlp_data.get('db_results')
 
-        for e in entities:
-            if isinstance(e, dict):
-                if 'label' in e and 'text' in e:
-                    entity_dict[e['label']] = e['text']
-                elif 'entity' in e and 'value' in e:
-                    entity_dict[e['entity']] = e['value']
-                elif 'type' in e and 'value' in e:
-                    entity_dict[e['type']] = e['value']
-
-        # Fill template
-        try:
-            if entity_dict:
-                # Use a safe way to format that doesn't fail on missing keys
-                response = self._safe_format(template, entity_dict)
+        if intent == 'book_search':
+            if db_results:
+                book_strings = []
+                for b in db_results:
+                    book_strings.append(f"• **{b['title']}** by {b['author']}\n  📍 Location: {b['location']}\n  📅 Available: {b['copies_available']} copies")
+                try:
+                    return template_obj['main'].format(count=len(db_results), book_list="\n".join(book_strings))
+                except KeyError:
+                    return f"📚 **BOOKS FOUND ({len(db_results)})**\n\n" + "\n".join(book_strings)
             else:
-                response = template
-        except Exception as e:
-            print(f"⚠️ Error formatting template: {e}")
+                query = nlp_data.get('text', 'your query')
+                try:
+                    return template_obj['no_results'].format(query=query)
+                except KeyError:
+                    return "❌ That book isn't in our catalog. Would you like to:\n1. Try different search terms?\n2. Request an inter-library loan?\n3. Check eBook alternatives?"
+
+        if intent == 'contact_info':
+            if db_results:
+                contact_strings = []
+                for c in db_results:
+                    contact_strings.append(f"• **{c['department']}**\n  📞 {c['phone']}\n  📧 {c['email']}\n  🕐 Hours: {c['hours']}")
+                return template_obj['main'].format(contact_list="\n".join(contact_strings))
+
+        template = template_obj.get('main', "I can help you with that.")
+        entities = nlp_data.get('entities', [])
+        entity_dict = {e['label']: e['text'] for e in entities if isinstance(e, dict) and 'label' in e}
+        entity_dict['current_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        try:
+            response = self._safe_format(template, entity_dict)
+        except Exception:
             response = template
 
-        # Add follow-up suggestions
         follow_up = template_obj.get('follow_up')
         if follow_up:
-            response += f" {follow_up}"
+            response += f"\n\n{follow_up}"
 
         return response
 
     def _safe_format(self, template: str, data: Dict) -> str:
-        """Safely format template with data, ignoring missing keys"""
         def replace(match):
             key = match.group(1)
             return str(data.get(key, match.group(0)))
         return re.sub(r'\{(\w+)\}', replace, template)
 
-    def _generate_clarification(self, data: Dict, context: Dict) -> str:
-        """Generate clarification question"""
-        unclear_entities = data.get('unclear_entities', [])
-
-        if unclear_entities:
-            entity_list = ", ".join(unclear_entities[:3])
-            return f"I want to help you better. Could you clarify what you mean by {entity_list}?"
-
-        # General clarification
-        clarification_templates = [
-            "Could you provide more details about what you're looking for?",
-            "I'm not sure I understand. Could you rephrase your question?",
-            "Are you looking for a specific book, library policy, or research help?"
-        ]
-
-        import random
-        return random.choice(clarification_templates)
-
     def _clean_response(self, text: str) -> str:
-        """Clean response text of encoding issues"""
-        if not text:
-            return ""
-
+        if not text: return ""
         text = self._clean_unicode_content(text)
-
-        # Direct replacements for common issues
-        fixes = {
-            'ð': '📚',  # Book emoji
-            'â¢': '•',  # Bullet point
-            'â€¢': '•',  # Another bullet variant
-            'â\x80\x99': "'",  # Right single quote
-            'â\x80\x9c': '"',  # Left double quote
-            'â\x80\x9d': '"',  # Right double quote
-            'â\x80\x93': '–',  # En dash
-            'â\x80\x94': '—',  # Em dash
-            'â\x80\xa2': '•',  # Bullet
-            'â\x80¦': '…',  # Ellipsis
-        }
-
-        # Apply fixes
+        fixes = {'ð': '📚', 'â¢': '•', 'â€¢': '•'}
         for bad, good in fixes.items():
             text = text.replace(bad, good)
-
-        # Ensure valid UTF-8
         try:
             return text.encode('utf-8', errors='ignore').decode('utf-8')
         except:
             return ''.join(char for char in text if ord(char) < 128)
+
+    def _generate_from_rule(self, rule_data: Dict, context: Dict) -> str:
+        # Simplistic rule generation for now
+        return rule_data.get('response_data', {}).get('template', rule_data.get('response_template', "I understand."))
+
+    def _generate_from_kb(self, kb_data: Dict, context: Dict) -> str:
+        return kb_data.get('answer', "I searched our knowledge base but couldn't find a specific answer.")
+
+    def _generate_clarification(self, data: Dict, context: Dict) -> str:
+        return self.templates['fallback']['main']

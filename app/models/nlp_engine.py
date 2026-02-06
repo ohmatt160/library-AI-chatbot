@@ -46,21 +46,19 @@ class HybridNLPEngine:
         self.intent_examples = {
             'book_search': ['find', 'search', 'locate', 'book', 'textbook'],
             'library_hours': ['hour', 'open', 'close', 'schedule', 'time'],
-            'borrowing_info': ['borrow', 'loan', 'return', 'due', 'fine'],
-            'research_help': ['research', 'journal', 'article', 'database'],
-            'greeting': ['hello', 'hi', 'hey', 'greetings'],
+            'book_availability': ['available', 'availability', 'in stock', 'on shelf'],
+            'book_renewal': ['renew', 'extension', 'prolong'],
+            'book_reservation': ['reserve', 'hold', 'booking'],
+            'borrowing_policy': ['policy', 'rule', 'limit', 'fine', 'how many', 'how long'],
+            'contact_info': ['contact', 'phone', 'email', 'call', 'address', 'department'],
+            'research_assistance': ['research', 'journal', 'article', 'database', 'citation', 'paper', 'literature'],
+            'study_rooms': ['study room', 'booking space', 'reserve room'],
+            'library_services': ['printing', 'scanning', 'workshop', 'service'],
+            'greeting': ['hello', 'hi', 'hey', 'greetings', 'morning', 'afternoon', 'evening'],
             'farewell': ['bye', 'goodbye', 'thank', 'thanks']
         }
 
-        self.library_intents = {
-            'book_search': ['find', 'search', 'locate', 'book', 'textbook'],
-            'library_hours': ['hour', 'open', 'close', 'schedule', 'time'],
-            'borrowing_info': ['borrow', 'loan', 'return', 'due', 'fine'],
-            'research_help': ['research', 'journal', 'article', 'database'],
-            'greeting': ['hello', 'hi', 'hey', 'greetings'],
-            'farewell': ['bye', 'goodbye', 'thank', 'thanks'],
-            'unknown': ['unknown']
-        }
+        self.library_intents = self.intent_examples
 
         # Also add library_keywords for the other method
         self.library_keywords = self.library_intents  # Use same dictionary
@@ -372,33 +370,37 @@ class HybridNLPEngine:
 
         text_lower = text.lower()
 
-        # LIBRARY HOURS - More specific matching
+        # Check for each intent
+        best_intent = 'unknown'
+        max_score = 0.3
+
+        for intent, keywords in self.library_intents.items():
+            score = 0
+            for kw in keywords:
+                if kw in text_lower:
+                    score += 0.4
+
+            if score > max_score:
+                max_score = score
+                best_intent = intent
+
+        # Overrides for better accuracy
         if any(word in text_lower for word in ['hour', 'open', 'close', 'time']):
-            # Give extra boost for full phrases
-            if 'library hour' in text_lower or 'what are the hour' in text_lower:
-                return 'library_hours', 0.95
-            if 'when does' in text_lower or 'what time' in text_lower:
-                return 'library_hours', 0.9
-            return 'library_hours', 0.85
+            if 'library hour' in text_lower: return 'library_hours', 0.95
+            best_intent, max_score = 'library_hours', max(max_score, 0.85)
 
-        # BOOK SEARCH
-        if any(word in text_lower for word in ['book', 'find', 'search', 'look for']):
-            return 'book_search', 0.8
+        if any(word in text_lower for word in ['book', 'find', 'search']):
+            if 'available' in text_lower: return 'book_availability', 0.9
+            best_intent, max_score = 'book_search', max(max_score, 0.8)
 
-        # BORROWING INFO
-        if any(word in text_lower for word in ['borrow', 'loan', 'return', 'policy']):
-            return 'borrowing_info', 0.8
+        if any(word in text_lower for word in ['renew']): return 'book_renewal', 0.9
+        if any(word in text_lower for word in ['reserve', 'hold']): return 'book_reservation', 0.9
 
-        # RESEARCH HELP
-        if any(word in text_lower for word in ['research', 'help', 'assist', 'support']):
-            return 'research_help', 0.7
+        if any(word in text_lower for word in ['contact', 'phone', 'email']): return 'contact_info', 0.9
 
-        # GREETINGS
-        if any(word in text_lower for word in ['hello', 'hi', 'hey', 'greeting']):
+        if any(word in text_lower for word in ['research', 'citation', 'paper']): return 'research_assistance', 0.85
+
+        if any(word in text_lower for word in ['hello', 'hi', 'hey', 'greeting', 'morning', 'afternoon', 'evening']):
             return 'greeting', 0.9
 
-        # FAREWELL
-        if any(word in text_lower for word in ['bye', 'goodbye', 'thank', 'thanks']):
-            return 'farewell', 0.9
-
-        return 'unknown', 0.3  # Increase default from 0.0 to 0.3
+        return best_intent, min(max_score, 0.95)

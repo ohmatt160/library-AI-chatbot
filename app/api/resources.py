@@ -229,6 +229,14 @@ class FeedbackResource(Resource):
                 'rating': args['rating']
             })
 
+        # Update learning if correction provided
+        if args['rating'] == 'thumbs_down' and args.get('corrected_response'):
+            from app.models.feedback_module import update_knowledge_base
+            update_knowledge_base(
+                original_message_id=args['message_id'],
+                corrected_response=args['corrected_response']
+            )
+
         return {
             'status': 'success',
             'feedback_id': feedback.id,
